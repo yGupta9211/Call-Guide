@@ -97,8 +97,6 @@ function App(props) {
           method: 'GET',
           headers: {
             accept: '*/*',
-            'tenant-id': tenantId,
-            Authorization: `Bearer ${token}`,
           },
         });
 
