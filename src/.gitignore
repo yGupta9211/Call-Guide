@@ -1,0 +1,28 @@
+# Node modules
+/node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build output
+/dist/
+/build/
+
+/*.env
+
+# IDE files
+.idea/
+.vscode/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Coverage directory
+/coverage/
+
+# Dependency directories
+/lib-cov/
+/npm/
