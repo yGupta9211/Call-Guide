@@ -88,10 +88,10 @@ function App(props) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const id = agentId; //?? 'a8cf2161-cba6-4e40-a572-377e13be4a4a';
-      console.log('Agent Id received from MyCustom Component',agentId);
+      const id = agentId ?? 'a8cf2161-cba6-4e40-a572-377e13be4a4a';
+      console.log('Agent Id received from MyCustom Component', agentId);
       const url = `https://unicampaign.consiliumapps.com/api/callguide/getcallguidedetails/${id}`;
-      
+
 
       try {
         const response = await fetch(url, {
