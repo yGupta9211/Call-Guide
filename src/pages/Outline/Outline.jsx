@@ -88,6 +88,7 @@ const Outline = () => {
         gap: '2rem',
         padding: '1rem',
         justifyContent: 'center',
+        overflow: 'auto',
       }}
     >
       {outlinePitch.map((item) => (

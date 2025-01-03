@@ -92,7 +92,6 @@ function App(props) {
       console.log('Agent Id received from MyCustom Component', agentId);
       const url = `https://unicampaign.consiliumapps.com/api/callguide/getcallguidedetails/${id}`;
 
-
       try {
         const response = await fetch(url, {
           method: 'GET',

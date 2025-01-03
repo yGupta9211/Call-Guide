@@ -31,12 +31,13 @@ const Callback = () => {
   };
 
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+    <Box sx={{ display: 'flex', justifyContent: 'center', overflow: 'auto' }}>
       <Paper
         sx={{
           padding: '2rem',
           margin: '1rem',
           width: '50%',
+          height: 'fit-content',
         }}
         elevation={2}
       >
