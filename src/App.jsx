@@ -60,7 +60,7 @@ function PageContent({
   contactDetail,
   callGuide,
   questions,
-  dyanmicData,
+  dynamicData,
   customerOption,
 }) {
   const selectedGuide = callGuide.find(
@@ -80,11 +80,11 @@ function PageContent({
   }
 
   if (!selectedGuide && pathname === 'hospitals' && customerOption == 1) {
-    return <Hospital dyanmicData={dyanmicData} />;
+    return <Hospital dynamicData={dynamicData} />;
   } else if (!selectedGuide && pathname === 'stores' && customerOption == 2) {
-    return <Store dyanmicData={dyanmicData} />;
+    return <Store dynamicData={dynamicData} />;
   } else if (!selectedGuide && pathname === 'shops' && customerOption == 3) {
-    return <MedicalShop dyanmicData={dyanmicData} />;
+    return <MedicalShop dynamicData={dynamicData} />;
   }
 
   if (!selectedGuide) {
@@ -98,7 +98,7 @@ PageContent.propTypes = {
   pathname: PropTypes.string.isRequired,
   contactDetail: PropTypes.object,
   callGuide: PropTypes.array.isRequired,
-  dyanmicData: PropTypes.array.isRequired,
+  dynamicData: PropTypes.array.isRequired,
   customerOption: PropTypes.string.isRequired,
 };
 
@@ -108,7 +108,7 @@ function App(props) {
   const [callGuide, setCallGuide] = useState([]);
   const [navigation, setNavigation] = useState([]);
   const [questions, setQuestions] = useState([]);
-  const [dyanmicData, setDynamicData] = useState([]);
+  const [dynamicData, setDynamicData] = useState([]);
   const [customerOptions, setCustomerOptions] = useState(null);
   const [loading, setLoading] = useState(true);
   const router = useDemoRouter('/contact-information');
@@ -140,7 +140,7 @@ function App(props) {
         setContactDetail(data.result.contactDetail);
         setCallGuide(data.result.callGuide || []);
         setQuestions(data.result.questions || []);
-        setDynamicData(data.result.dyanmicData || []);
+        setDynamicData(data.result.dynamicData || []);
         setCustomerOptions(data.result.customerOption || 0);
 
         const fixedNavigationTop = [
@@ -236,7 +236,7 @@ function App(props) {
             contactDetail={contactDetail}
             callGuide={callGuide}
             questions={questions}
-            dynamicData={dyanmicData}
+            dynamicData={dynamicData}
             customerOption={customerOptions}
           />
         </DashboardLayout>
