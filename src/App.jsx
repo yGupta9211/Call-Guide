@@ -173,7 +173,7 @@ function App(props) {
           });
         }
 
-        if (Array.isArray(data.result.dynamicData) && data.result.length > 0) {
+        if (Array.isArray(data.result.dynamicData) && data.result.dynamicData.length > 0) {
           if (data.result.customerOption == 1) {
             fixedNavigationBottom.push({
               segment: 'hopsitals',
