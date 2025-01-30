@@ -79,11 +79,11 @@ function PageContent({
     return <Questions questions={questions} />;
   }
 
-  if (!selectedGuide && pathname === 'hospitals' && customerOption === 1) {
+  if (!selectedGuide && pathname === 'hospitals' && customerOption == 1) {
     return <Hospital dyanmicData={dyanmicData} />;
-  } else if (!selectedGuide && pathname === 'stores' && customerOption === 2) {
+  } else if (!selectedGuide && pathname === 'stores' && customerOption == 2) {
     return <Store dyanmicData={dyanmicData} />;
-  } else if (!selectedGuide && pathname === 'shops' && customerOption === 3) {
+  } else if (!selectedGuide && pathname === 'shops' && customerOption == 3) {
     return <MedicalShop dyanmicData={dyanmicData} />;
   }
 
@@ -98,6 +98,8 @@ PageContent.propTypes = {
   pathname: PropTypes.string.isRequired,
   contactDetail: PropTypes.object,
   callGuide: PropTypes.array.isRequired,
+  dyanmicData: PropTypes.array.isRequired,
+  customerOption: PropTypes.string.isRequired,
 };
 
 function App(props) {
@@ -172,19 +174,19 @@ function App(props) {
         }
 
         if (Array.isArray(data.result.dynamicData) && data.result.length > 0) {
-          if (data.result.customerOption === 1) {
+          if (data.result.customerOption == 1) {
             fixedNavigationBottom.push({
               segment: 'hopsitals',
               title: 'Hospital',
               icon: <PhoneCallbackIcon />,
             });
-          } else if (data.result.customerOption === 2) {
+          } else if (data.result.customerOption == 2) {
             fixedNavigationBottom.push({
               segment: 'stores',
               title: 'Stores',
               icon: <PhoneCallbackIcon />,
             });
-          } else if (data.result.customerOption === 3) {
+          } else if (data.result.customerOption == 3) {
             fixedNavigationBottom.push({
               segment: 'shops',
               title: 'MedicalShops',
