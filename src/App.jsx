@@ -19,9 +19,12 @@ import AgentScript from './pages/AgentScript/AgentScript';
 import Callback from './pages/Callback/Callback';
 import Questions from './pages/Questions/Questions';
 import DynamicDataForm from './pages/DynamicData/DynamicData';
+import Hospital from './pages/Hospital/Hospital';
+import MedicalShop from './pages/MedicalShop/MedicalShop';
+import Store from './pages/Store/Store';
 
 // import fav from '../src/assets/fav.png';
-import fav from '../public/fav.png'
+import fav from '../public/fav.png';
 
 const theme = createTheme({
   cssVariables: {
@@ -47,9 +50,17 @@ const COMPONENTS = {
   'agent-script': AgentScript, // Dynamically use this for callGuide items
   callback: Callback,
   questions: Questions,
+  hospitals: Hospital,
 };
 
-function PageContent({ pathname, contactDetail, callGuide, questions }) {
+function PageContent({
+  pathname,
+  contactDetail,
+  callGuide,
+  questions,
+  dyanmicData,
+  customerOption,
+}) {
   const selectedGuide = callGuide.find(
     (guide) => guide.heading.toLowerCase().replace(/\s+/g, '-') === pathname
   );
@@ -64,6 +75,14 @@ function PageContent({ pathname, contactDetail, callGuide, questions }) {
 
   if (!selectedGuide && pathname === 'questions') {
     return <Questions questions={questions} />;
+  }
+
+  if (!selectedGuide && pathname === 'hospitals' && customerOption === 1) {
+    return <Hospital dyanmicData={dyanmicData} />;
+  } else if (!selectedGuide && pathname === 'store' && customerOption === 2) {
+    return <Store dyanmicData={dyanmicData} />;
+  } else if (!selectedGuide && pathname === 'shops' && customerOption === 3) {
+    return <MedicalShop dyanmicData={dyanmicData} />;
   }
 
   if (!selectedGuide) {
@@ -85,6 +104,8 @@ function App(props) {
   const [callGuide, setCallGuide] = useState([]);
   const [navigation, setNavigation] = useState([]);
   const [questions, setQuestions] = useState([]);
+  const [dyanmicData, setDynamicData] = useState([]);
+  const [customerOptions, setCustomerOptions] = useState(null);
   const [loading, setLoading] = useState(true);
   const router = useDemoRouter('/contact-information');
 
@@ -115,6 +136,8 @@ function App(props) {
         setContactDetail(data.result.contactDetail);
         setCallGuide(data.result.callGuide || []);
         setQuestions(data.result.questions || []);
+        setDynamicData(data.result.dyanmicData || []);
+        setCustomerOptions(data.result.customerOption || 0);
 
         const fixedNavigationTop = [
           {
@@ -146,6 +169,28 @@ function App(props) {
           });
         }
 
+        if (Array.isArray(data.result.dynamicData) && data.result.length > 0) {
+          if (data.result.customerOption === 1) {
+            fixedNavigationBottom.push({
+              segment: 'hopsital',
+              title: 'Hospital',
+              icon: <PhoneCallbackIcon />,
+            });
+          } else if (data.result.customerOption === 2) {
+            fixedNavigationBottom.push({
+              segment: 'stores',
+              title: 'Stores',
+              icon: <PhoneCallbackIcon />,
+            });
+          } else if (data.result.customerOption === 3) {
+            fixedNavigationBottom.push({
+              segment: 'shops',
+              title: 'MedicalShops',
+              icon: <PhoneCallbackIcon />,
+            });
+          }
+        }
+
         fixedNavigationBottom.push({
           segment: 'callback',
           title: 'Appointment ',
@@ -168,7 +213,6 @@ function App(props) {
     fetchData();
   }, [agentId]);
 
-
   if (loading) return <div>Loading...</div>;
 
   const demoWindow = window !== undefined ? window() : undefined;
@@ -188,6 +232,8 @@ function App(props) {
             contactDetail={contactDetail}
             callGuide={callGuide}
             questions={questions}
+            dynamicData={dyanmicData}
+            customerOption={customerOptions}
           />
         </DashboardLayout>
       </AppProvider>
