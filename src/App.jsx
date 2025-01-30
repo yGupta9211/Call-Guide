@@ -51,6 +51,8 @@ const COMPONENTS = {
   callback: Callback,
   questions: Questions,
   hospitals: Hospital,
+  stores: Store,
+  shops: MedicalShop,
 };
 
 function PageContent({
@@ -79,7 +81,7 @@ function PageContent({
 
   if (!selectedGuide && pathname === 'hospitals' && customerOption === 1) {
     return <Hospital dyanmicData={dyanmicData} />;
-  } else if (!selectedGuide && pathname === 'store' && customerOption === 2) {
+  } else if (!selectedGuide && pathname === 'stores' && customerOption === 2) {
     return <Store dyanmicData={dyanmicData} />;
   } else if (!selectedGuide && pathname === 'shops' && customerOption === 3) {
     return <MedicalShop dyanmicData={dyanmicData} />;
@@ -172,7 +174,7 @@ function App(props) {
         if (Array.isArray(data.result.dynamicData) && data.result.length > 0) {
           if (data.result.customerOption === 1) {
             fixedNavigationBottom.push({
-              segment: 'hopsital',
+              segment: 'hopsitals',
               title: 'Hospital',
               icon: <PhoneCallbackIcon />,
             });
