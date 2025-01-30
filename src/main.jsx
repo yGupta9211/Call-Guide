@@ -11,7 +11,12 @@ function MainApp() {
     console.log('Initializing message listener...');
 
     const handleMessage = (event) => {
-      if (event.origin !== 'https://desktop.wxcc-us1.cisco.com') {
+      console.log(event);
+      // if (event.origin !== 'https://desktop.wxcc-us1.cisco.com') {
+      //   console.warn('Message received from untrusted origin:', event.origin);
+      //   return;
+      // }
+      if (event.origin !== 'http://localhost:5173') {
         console.warn('Message received from untrusted origin:', event.origin);
         return;
       }
@@ -28,6 +33,8 @@ function MainApp() {
           console.log('Received agentID:', event.data.content);
           setAgentId(event.data.content); // Store the agentID
           setEventReceived(true); // Mark the event as received
+          console.log('Cleaning up event listener.');
+          window.removeEventListener('message', handleMessage);
         } else {
           console.error('Error: agentID content is missing in the message.');
         }
@@ -49,7 +56,9 @@ function MainApp() {
   if (!eventReceived) {
     // return <div>Waiting for agentID from iframe...</div>; // Display a loading message or spinner
     console.log('event not received');
+    return <div>Loading...</div>;
   }
+
 
   return <App agentId={agentId} />; // Pass the agentID as a prop to the App component
 }

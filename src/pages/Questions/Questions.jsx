@@ -42,6 +42,7 @@ const Questions = ({ questions }) => {
           mt: 4,
           p: 4,
           borderRadius: 2,
+          minHeight: '800px'
         }}
       >
         <Typography variant='h5' gutterBottom align='center'>

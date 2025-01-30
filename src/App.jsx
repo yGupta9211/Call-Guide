@@ -18,8 +18,10 @@ import ContactInformation from './pages/ContactInformation/ContactInformation';
 import AgentScript from './pages/AgentScript/AgentScript';
 import Callback from './pages/Callback/Callback';
 import Questions from './pages/Questions/Questions';
+import DynamicDataForm from './pages/DynamicData/DynamicData';
 
-import fav from '../src/assets/fav.png';
+// import fav from '../src/assets/fav.png';
+import fav from '../public/fav.png'
 
 const theme = createTheme({
   cssVariables: {
@@ -57,7 +59,7 @@ function PageContent({ pathname, contactDetail, callGuide, questions }) {
   }
 
   if (!selectedGuide && pathname === 'callback') {
-    return <Callback />;
+    return <Callback contactDetail={contactDetail} />;
   }
 
   if (!selectedGuide && pathname === 'questions') {
@@ -88,9 +90,14 @@ function App(props) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const id = agentId ; //?? 'a8cf2161-cba6-4e40-a572-377e13be4a4a';
+      const id = agentId ?? 'a8cf2161-cba6-4e40-a572-377e13be4a4a';
       console.log('Agent Id received from MyCustom Component', agentId);
-      const url = `https://unicampaign.consiliumapps.com/api/callguide/getcallguidedetails/${id}`;
+      //const sharedData = JSON.parse(localStorage.getItem('sharedData'));
+      //console.log(sharedData); // { key: 'value' }
+      localStorage.setItem('AgentIdData', 'sharedData');
+
+      // const url = `https://unicampaign.consiliumapps.com/api/callguide/getcallguidedetails/${id}`;
+      const url = `https://localhost:44335/api/callguide/getcallguidedetails/${id}`;
 
       try {
         const response = await fetch(url, {
@@ -141,7 +148,7 @@ function App(props) {
 
         fixedNavigationBottom.push({
           segment: 'callback',
-          title: 'Callback',
+          title: 'Appointment ',
           icon: <PhoneCallbackIcon />,
         });
 
@@ -154,11 +161,13 @@ function App(props) {
       } catch (error) {
         console.error('Error fetching data:', error);
         setLoading(false);
+      } finally {
+        setLoading(false);
       }
     };
-
     fetchData();
   }, [agentId]);
+
 
   if (loading) return <div>Loading...</div>;
 
@@ -171,7 +180,7 @@ function App(props) {
         router={router}
         theme={theme}
         window={demoWindow}
-        branding={{ title: 'CallGuide', logo: <img src={fav} alt='Logo' /> }}
+        branding={{ title: 'Call Guide', logo: <img src={fav} alt='Logo' /> }}
       >
         <DashboardLayout>
           <PageContent
