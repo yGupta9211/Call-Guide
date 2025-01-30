@@ -11,7 +11,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import the CSS
 
 const contactInfo = {
-  msdin: 'phoneNumber',
   firstName: 'firstName',
   lastName: 'lastName',
   phoneNumber: 'phoneNumber',
@@ -60,7 +59,7 @@ const ContactInformation = ({ contactDetail }) => {
   useEffect(() => {
     const onSubmit = async () => {
       try {
-        // const url = `https://unicampaign.consiliumapps.com/api/dialer-details/${contactDetail.id}`;
+
 
         let formattedData = {};
         let customHeaders = [];
@@ -76,7 +75,8 @@ const ContactInformation = ({ contactDetail }) => {
           ...formattedData,
           customHeaders, // Add extra fields here
         };
-        const url = `https://localhost:44335/api/dialer-details/${contactDetail.id}`;
+        const url = `https://unicampaign.consiliumapps.com/api/callguide/${contactDetail.id}`;
+        // const url = `https://localhost:44335/api/callguide/${contactDetail.id}`;
 
         const response = await fetch(url, {
           method: 'PUT',
@@ -90,7 +90,7 @@ const ContactInformation = ({ contactDetail }) => {
         });
 
         if (!response.ok) {
-          if(response.status == 401){
+          if (response.status == 401) {
             throw new Error(`Unauthorized Error : ${response.status} `)
           }
           throw new Error(`HTTP error! status: ${response.status}`);

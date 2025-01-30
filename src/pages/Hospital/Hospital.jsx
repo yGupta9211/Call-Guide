@@ -15,36 +15,51 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const initialHospitals = [
   {
-    name: 'City General Hospital',
-    address: {
-      street: '123 Health Lane',
-      city: 'Metropolis',
-      state: 'CA',
-      zipCode: '90210',
-    },
-    phone: '555-123-4567',
-    specialties: ['Emergency Care', 'Cardiology', 'Pediatrics'],
+    "name": "City General Hospital",
+    "address": "123 Health Lane , Metropolis, CA 90210",
+    "phone": "555-123-4567",
+    "specialties": [ "Emergency Care", "Cardiology", "Pediatrics" ],
+    "departments": [
+      {
+        "departmentName": "Emergency Room",
+        "numberOfStaff": 45
+      },
+      {
+        "departmentName": "Surgery",
+        "numberOfStaff": 30
+      }
+    ],
+    "emergencyServices": true,
+    "foundingYear": 1985
   },
   {
-    name: 'Green Valley Medical Center',
-    address: {
-      street: '456 Wellness Blvd',
-      city: 'Green Valley',
-      state: 'TX',
-      zipCode: '75001',
-    },
-    phone: '555-987-6543',
-    specialties: ['Oncology', 'Neurology'],
-  },
+    "name": "Green Valley Medical Center",
+    "address": "456 Green Valley TX 75001",
+    "phone": "555-987-6543",
+    "specialties": [ "Oncology", "Neurology" ],
+    "departments": [
+      {
+        "departmentName": "Cancer Center",
+        "numberOfStaff": 25
+      },
+      {
+        "departmentName": "Neurology Unit",
+        "numberOfStaff": 20
+      }
+    ],
+    "emergencyServices": false,
+    "foundingYear": 2000
+  }
 ];
 
 const HospitalForm = ({ hospital, index, hospitals, setHospitals }) => {
   const [formData, setFormData] = useState({
     name: hospital.name,
-    street: hospital.address.street,
-    city: hospital.address.city,
-    state: hospital.address.state,
-    zipCode: hospital.address.zipCode,
+    address: hospital.address,
+    // street: hospital.address.street,
+    // city: hospital.address.city,
+    // state: hospital.address.state,
+    // zipCode: hospital.address.zipCode,
     phone: hospital.phone,
     specialties: hospital.specialties.join(', '),
   });
@@ -61,12 +76,13 @@ const HospitalForm = ({ hospital, index, hospitals, setHospitals }) => {
     const updatedHospitals = [...hospitals];
     updatedHospitals[index] = {
       name: formData.name,
-      address: {
-        street: formData.street,
-        city: formData.city,
-        state: formData.state,
-        zipCode: formData.zipCode,
-      },
+      address: formData.address,
+      // address: {
+      //   street: formData.street,
+      //   city: formData.city,
+      //   state: formData.state,
+      //   zipCode: formData.zipCode,
+      // },
       phone: formData.phone,
       specialties: formData.specialties.split(', ').map((s) => s.trim()),
     };
@@ -79,9 +95,9 @@ const HospitalForm = ({ hospital, index, hospitals, setHospitals }) => {
   };
 
   return (
-    <Paper sx={{ padding: '2rem', margin: '1rem', width: '50%' }} elevation={2}>
+    <Paper sx={{ padding: '2rem', margin: '1rem', width: '100%' }} elevation={2}>
       <Typography variant='h5' gutterBottom>
-        Update Hospital: {hospital.name}
+        {hospital.name}
       </Typography>
       <Box
         component='form'
@@ -97,6 +113,15 @@ const HospitalForm = ({ hospital, index, hospitals, setHospitals }) => {
           onChange={handleChange}
         />
         <TextField
+          label='Address'
+          fullWidth
+          required
+          name='address'
+          value={formData.address}
+          onChange={handleChange}
+          sx={{ mt: 2 }}
+        />
+        {/* <TextField
           label='Street Address'
           fullWidth
           required
@@ -131,7 +156,7 @@ const HospitalForm = ({ hospital, index, hospitals, setHospitals }) => {
           value={formData.zipCode}
           onChange={handleChange}
           sx={{ mt: 2 }}
-        />
+        /> */}
         <TextField
           label='Phone Number'
           fullWidth
@@ -162,7 +187,7 @@ const HospitalForm = ({ hospital, index, hospitals, setHospitals }) => {
             fullWidth
             sx={{ mt: 2 }}
           >
-            Update Hospital
+            Transfer
           </Button>
         )}
       </Box>
@@ -170,8 +195,9 @@ const HospitalForm = ({ hospital, index, hospitals, setHospitals }) => {
   );
 };
 
-const App = () => {
-  const [hospitals, setHospitals] = useState(initialHospitals);
+const App = ({dynamicData}) => {
+  console.log('Hospital Data:', dynamicData);
+  const [hospitals, setHospitals] = useState(dynamicData ?? initialHospitals);
   return (
     <div>
       {hospitals.map((hospital, index) => (

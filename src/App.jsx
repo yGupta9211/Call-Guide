@@ -79,6 +79,7 @@ function PageContent({
     return <Questions questions={questions} />;
   }
 
+  console.log('PathName:', pathname);
   if (!selectedGuide && pathname === 'hospitals' && customerOption == 1) {
     return <Hospital dynamicData={dynamicData} />;
   } else if (!selectedGuide && pathname === 'stores' && customerOption == 2) {
@@ -121,8 +122,8 @@ function App(props) {
       //console.log(sharedData); // { key: 'value' }
       localStorage.setItem('AgentIdData', 'sharedData');
 
-      // const url = `https://unicampaign.consiliumapps.com/api/callguide/getcallguidedetails/${id}`;
-      const url = `https://localhost:44335/api/callguide/getcallguidedetails/${id}`;
+      const url = `https://unicampaign.consiliumapps.com/api/callguide/getcallguidedetails/${id}`;
+      //const url = `https://localhost:44335/api/callguide/getcallguidedetails/${id}`;
 
       try {
         const response = await fetch(url, {
@@ -176,8 +177,8 @@ function App(props) {
         if (Array.isArray(data.result.dynamicData) && data.result.dynamicData.length > 0) {
           if (data.result.customerOption == 1) {
             fixedNavigationBottom.push({
-              segment: 'hopsitals',
-              title: 'Hospital',
+              segment: 'hospitals',
+              title: 'Hospitals',
               icon: <PhoneCallbackIcon />,
             });
           } else if (data.result.customerOption == 2) {
